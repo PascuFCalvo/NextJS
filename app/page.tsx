@@ -3,6 +3,7 @@ import styles from './ui/home.module.css';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { lusitana } from './ui/fonts';
+import Image from 'next/image';
 
 export default function Page() {
   return (
@@ -30,7 +31,28 @@ export default function Page() {
           </Link>
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          {/* Add Hero Images Here */}
+          {/*el linter te recomienda usar el componente image  y no el elemento img de html */}
+          {/* <img src="/hero-desktop.png" alt="Screenshots of the dashboard" /> */}
+          {/* la imagen pasa a ocupar 1/3 y el formato pasa a ser webp */}
+          <Image
+            src="/hero-desktop.png"
+            alt="Screenshots of the dashboard"
+            width={1000}
+            height={760}
+            //breakpoints para 768 px
+            className="hidden md:block"
+          ></Image>
+
+          {/* como tiene lazy load no cargaria las 2 imagenes, la segunda solo la carga cuando lo necesita */}
+
+          <Image
+            src="/hero-mobile.png"
+            alt="Screenshots of the dashboard"
+            width={560}
+            height={620}
+            //breakpoints para 768 px pero al reves
+            className="block md:hidden"
+          ></Image>
         </div>
       </div>
     </main>
