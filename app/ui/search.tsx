@@ -4,15 +4,18 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useSearchParams } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import { useDebouncedCallback } from 'use-debounce';
 
 // vamos a crear dinamic search params en la url
 // para eso vamos a usar el hook useSearchParams
 
 export default function Search({ placeholder }: { placeholder: string }) {
+  const waitTime = 300;
+
   const searchParams = useSearchParams();
   const pathnmae = usePathname();
   const { replace } = useRouter();
-  const handlerSearch = (term: string) => {
+  const handlerSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set('query', term);
@@ -21,7 +24,8 @@ export default function Search({ placeholder }: { placeholder: string }) {
     }
 
     replace(`${pathnmae}?${params.toString()}`);
-  };
+  }, waitTime);
+
   return (
     <div className="relative flex flex-1 flex-shrink-0">
       <label htmlFor="search" className="sr-only">

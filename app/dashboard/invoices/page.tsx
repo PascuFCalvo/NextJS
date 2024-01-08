@@ -14,7 +14,7 @@ export default async function Page({
     page?: string;
   };
 }) {
- const currentPage = Number(searchParams?.page) || 1;
+  const currentPage = Number(searchParams?.page) || 1;
   const query = searchParams?.query || '';
 
   return (
@@ -26,6 +26,7 @@ export default async function Page({
         <Search placeholder="Search invoices..." />
         <CreateInvoice />
       </div>
+      {/*Se pone la key para forzar al skeleton a re-renderizarse cada vez, si no solo lo haria 1*/}
       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
         <Table query={query} currentPage={currentPage} />
       </Suspense>
