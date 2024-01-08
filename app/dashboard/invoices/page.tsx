@@ -6,9 +6,16 @@ import Table from '@/app/ui/invoices/table';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 
-export default async function Page() {
-  const query = '';
-  const currentPage = 1;
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
+ const currentPage = Number(searchParams?.page) || 1;
+  const query = searchParams?.query || '';
 
   return (
     <div className="w-full">
