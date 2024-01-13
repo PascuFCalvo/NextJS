@@ -6,6 +6,8 @@
 import { z } from 'zod';
 import { Invoice } from './definitions';
 import { sql } from '@vercel/postgres';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 //creas un esquema de validacion para el objeto que se va a recibir con zod
 
@@ -47,4 +49,9 @@ export async function createInvoice(formdata: FormData) {
     INSERT INTO invoices(customer_id, amount, status, date)
     VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
    `;
+
+  //recachear
+
+  revalidatePath('/dashboard/invoices');
+  redirect('/dashboard/invoices');
 }
